@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Kepribadian</title>
+  <style>
+    /* MASUKKAN CSS DI SINI (yang dari jawaban sebelumnya) */
+  </style>
+</head>
+<body>
+
+  <h2>UNDERSTANDING PEOPLE FORM</h2>
+  <p><strong>Instruksi:</strong></p>
+  <ul>
+    <li>Berikut ini terdapat 26 pertanyaan pilihan ganda. Pada setiap baris, kamu diminta untuk memilih satu kata yang paling menggambarkan dirimu.</li>
+    <li>Hanya satu pilihan per baris (A, B, C, atau D).</li>
+    <li>Tekan "Count" untuk melihat hasil.</li>
+  </ul>
+
+  <form id="personalityForm">
+    <h3>Pilih satu dari setiap baris (1 sampai 26):</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+        </tr>
+      </thead>
+      <tbody id="questions"></tbody>
+    </table>
+    <button type="button" onclick="countResults()">Count</button>
+    <button type="reset">Reset</button>
+  </form>
+
+  <h3>Hasil:</h3>
+  <div id="result"></div>
+
+  <script>
+    const questionsData = [
+      {
+        A: "Menyukai ide-ide kreatif dan tidak umum",
+        B: "Selektif dalam menerima informasi, hanya menangkap informasi yang relevan untuk dirinya",
+        C: "Membutuhkan informasi terkini dan disajikan secara lengkap dan terperinci",
+        D: "Terbuka terhadap informasi baru (open minded)"
+      },
+      {
+        A: "Menyerap informasi dengan cepat berdasarkan minat pribadinya",
+        B: "Kurang menunjukkan keinginan untuk berkomunikasi dan tidak peka terhadap lingkungan sekitarnya",
+        C: "Cenderung skeptis terhadap informasi baru yang tidak mengedepankan fakta",
+        D: "Lebih mudah menerima informasi yang disampaikan oleh orang terdekat seperti teman maupun keluarga"
+      },
+      {
+        A: "Terlalu cepat menyimpulkan informasi yang diterima",
+        B: "Dalam menerima ide-ide yang umum tidak menarik minatnya",
+        C: "Mempelajari informasi berdasarkan bukti-bukti dan fakta",
+        D: "Menghindari ide-ide ekstrem"
+      },
+      {
+        A: "Senang menerima pujian terhadap citra dirinya",
+        B: "Menyukai ide-ide yang menantang",
+        C: "Memproses informasi yang diterima dengan teliti dan mendalam",
+        D: "Cenderung menyukai ide yang sederhana dan membangun"
+      },     {
+        A: "Bertindak dahulu baru berpikir kemudian",
+        B: "Berorientasi pada pemikiran dan pertimbangan pribadi",
+        C: "Memiliki berbagai pertimbangan pribadi",
+        D: "Sering kali membutuhkan orang lain untuk bertukar pikiran"
+      },     {
+        A: "Tidak menyukai uraian teknis, apalagi yang mengandung angka",
+        B: "Prinsip maupun pengalaman menjadi pedoman utama dalam menerima informasi",
+        C: "Tidak menyukai informasi yang tidak lengkap",
+        D: "Meminta konfirmasi orang lain terhadap pemikirannya"
+      },     {
+        A: "Cara berpikirnya fleksibel dan tidak terpaku pada satu proses",
+        B: "Informasi yang diterima, disusun secara sistematis, bukan proses coba-coba",
+        C: "Informasi dipertimbangkan dengan sangat matang",
+        D: "Lebih menyukai informasi yang sudah tersusun rapi"
+      },     {
+        A: "Informasi diserap berdasarkan suasana hati",
+        B: "Tidak menyukai cara berpikir yang bertele-tele dan birokratif",
+        C: "Informasi diurutkan secara logis dan sistematis",
+        D: "Informasi diterima berdasarkan apa yang sudah diketahui"
+      },     {
+        A: "Cara berpikir intuitif dan logis",
+        B: "Berpikir step by step",
+        C: "Lebih banyak menggunakan pemikiran angka panjang",
+        D: "Cara berpikir strategis"
+      },     {
+        A: "Sulit menerima kritik dari orang lain",
+        B: "Tidak nyaman memikirkan pendapat orang lain",
+        C: "Sering kali terlalu banyak pertimbangan",
+        D: "Berorientasi pada minat dan pemikiran pribadi"
+      },     {
+        A: "Tidak menyukai hal-hal yang bersifat detail",
+        B: "Menekankan pada pencapaian hasil yang optimal",
+        C: "Perfeksionis atau menuntut kesempurnaan dalam pekerjaan",
+        D: "Terkadang ragu terhadap opini diri sendiri"
+      },     {
+        A: "Sering kali menunda pekerjaan",
+        B: "Sulit dipengaruhi karena memegang prinsip pribadi yang teguh",
+        C: "Memutuskan segala sesuatu secara objektif dan rasional",
+        D: "Kerap kali ragu melakukan perubahan"
+      },     {
+        A: "Senang berkumpul secara kasual dengan pembicaraan spontan",
+        B: "Menyukai berbicara secara langsung, tidak basa-basi",
+        C: "Memikirkan semua perkataan yang akan diutarakan sebelum berbicara",
+        D: "Mudah menyesuaikan diri ketika sudah merasa nyaman"
+      },     {
+        A: "Menyukai berkomunikasi secara terbuka dan apa adanya",
+        B: "Individualistis - tidak memerlukan pendapat atau konfirmasi orang lain",
+        C: "Sistematis dalam menyusun pemikiran yang ingin disampaikan",
+        D: "Suka berkolaborasi dengan orang lain ketika mengerjakan tugas"
+      },     {
+        A: "Berbicara langsung terhadap apa yang dirasakan",
+        B: "Berpegang teguh pada prinsip",
+        C: "Menyukai suasana diskusi secara formal dengan menyiapkan terlebih dahulu topik pembicaraan",
+        D: "Berhati-hati dalam berbicara"
+      },     {
+        A: "Cenderung tertarik dengan topik yang berkaitan tentang dirinya dan minatnya",
+        B: "Menyukai kompetisi",
+        C: "Lebih nyaman berdiskusi interpersonal",
+        D: "Terbuka menerima saran dari orang lain"
+      },     {
+        A: "Mengetahui berbagai hal yang menjadi pembicaraan terkini",
+        B: "Menyukai perdebatan atau argumentasi",
+        C: "Tidak suka didikte",
+        D: "Tidak banyak berbicara, tetapi cenderung bijaksana"
+      },     {
+        A: "Kerap kali mudah terpengaruh (dikendalikan orang lain)",
+        B: "Sulit menerima pendapat orang lain",
+        C: "Senang dikenal sebagai pemikir",
+        D: "Pendengar yang baik"
+      },     {
+        A: "Dalam berdiskusi, cenderung mendominasi pembicaraan",
+        B: "Tidak suka menjadi pengikut",
+        C: "Ketika mengemukakan pendapat, sering kali tidak suka dibantah",
+        D: "Menghindari penyampaian kata yang dapat merusak perasaan orang lain"
+      },     {
+        A: "Alur pembicaraan tidak terstruktur",
+        B: "Sulit berempati terhadap perasaan orang lain",
+        C: "Berpikir filosofis dan konseptual",
+        D: "Suka membantu dan pandai menyembunyikan perasaan"
+      },     {
+        A: "Tidak suka diatur",
+        B: "Selalu dapat melihat peluang yang tidak dipikirkan oleh orang lain",
+        C: "Menyukai keindahan dan keteraturan",
+        D: "Dapat berkomunikasi lebih banyak menggunakan perasaan dan memusatkan diri kepada orang lain"
+      },     {
+        A: "Sering kali menyampaikan informasi dengan data yang tidak lengkap",
+        B: "Lebih senang menjadi pihak yang didengarkan",
+        C: "Tidak mudah terbuka kepada semua orang",
+        D: "Menjadi pendengar yang baik dan cenderung menghindari konflik"
+      },     {
+        A: "Cepat dalam pengambilan keputusan",
+        B: "Bersikap tegas dan konklusif saat membuat keputusan",
+        C: "Membutuhkan waktu yang lebih lama untuk mengumpulkan informasi sebelum mengambil keputusan",
+        D: "Menyukai keputusan yang dibuat bersama"
+      },     {
+        A: "Sering kali membuat keputusan secara tergesa",
+        B: "Kurang toleran terhadap pendapat orang lain",
+        C: "Menganalisis risiko untuk menjadi bahan pertimbangan sebelum mengambil keputusan",
+        D: "Membutuhkan masukan dari orang lain sebelum mengambil keputusan"
+      },     {
+        A: "Cenderung mengabaikan informasi pendukung",
+        B: "Keputusan yang dibuat sering kali bertentangan dengan pendapat umum",
+        C: "Keputusan dibuat berdasarkan pertimbangan fakta dan data",
+        D: "Lebih yakin untuk membuat keputusan ketika sudah mendapatkan banyak umpan balik"
+      },     {
+        A: "Keputusan diambil agar cepat selesai",
+        B: "Keputusan tidak dapat diganggu gugat",
+        C: "Terkadang memberikan solusi yang terlalu rumit untuk masalah sederhana",
+        D: "Lebih mendengarkan pendapat orang lain karena mengutamakan harmoni daripada pendapat pribadi"
+      },
+    ];
+
+    const totalQuestions = questionsData.length;
+    const container = document.getElementById("questions");
+
+    for (let i = 0; i < totalQuestions; i++) {
+      const row = document.createElement("tr");
+      const q = questionsData[i];
+      row.innerHTML = `
+<td data-label="No"><span class="nomor">${i + 1}</span></td>
+        <td data-label="A"><label><input type="radio" name="q${i + 1}" value="A" required> ${q.A}</label></td>
+        <td data-label="B"><label><input type="radio" name="q${i + 1}" value="B"> ${q.B}</label></td>
+        <td data-label="C"><label><input type="radio" name="q${i + 1}" value="C"> ${q.C}</label></td>
+        <td data-label="D"><label><input type="radio" name="q${i + 1}" value="D"> ${q.D}</label></td>
+      `;
+      container.appendChild(row);
+    }
+
+    function countResults() {
+      let countA = 0, countB = 0, countC = 0, countD = 0;
+      for (let i = 1; i <= totalQuestions; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!selected) {
+          alert(`Pertanyaan nomor ${i} belum dijawab.`);
+          return;
+        }
+        if (selected.value === "A") countA++;
+        else if (selected.value === "B") countB++;
+        else if (selected.value === "C") countC++;
+        else if (selected.value === "D") countD++;
+      }
+
+      document.getElementById("result").innerHTML = `
+        <p>Total A: ${countA}</p>
+        <p>Total B: ${countB}</p>
+        <p>Total C: ${countC}</p>
+        <p>Total D: ${countD}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
